@@ -2,49 +2,54 @@ package com.prof.dz.frameworks.view
 
 import android.os.Bundle
 import android.widget.Toast
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.prof.dz.R
 import com.prof.dz.entities.DataModel
 import com.prof.dz.frameworks.network.model.SearchResult
-import com.prof.dz.interface_adapters.presenters.IPresenter
-import com.prof.dz.interface_adapters.presenters.MainPresenterImpl
+import com.prof.dz.interface_adapters.presenters.BaseViewModel
+import com.prof.dz.interface_adapters.presenters.MainViewModel
 import com.prof.dz.use_case.interactors.MainInteractor
 import com.prof.dz.use_case.repositories.RepositoryImplementation
+import dagger.android.AndroidInjection
 import geekbrains.ru.translator.model.datasource.DataSourceLocal
 import geekbrains.ru.translator.model.datasource.DataSourceRemote
 import geekbrains.ru.translator.view.main.adapter.MainAdapter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
+import javax.inject.Inject
 
-class MainActivity : BaseActivity<DataModel>() {
+class MainActivity() : BaseActivity<DataModel,MainInteractor>() {
     private var adapter: MainAdapter? = null
-    private val onListItemClickListener: MainAdapter.OnListItemClickListener =
+    @Inject
+   internal lateinit var viewModelFactory: ViewModelProvider.Factory
+   override lateinit var viewModel: MainViewModel
+
+        private val onListItemClickListener: MainAdapter.OnListItemClickListener =
         object : MainAdapter.OnListItemClickListener {
             override fun onItemClick(data: SearchResult) {
                 Toast.makeText(this@MainActivity, data.text, Toast.LENGTH_SHORT).show()
             }
         }
 
-    override fun createPresenter(): IPresenter<DataModel, View> {
-        val interactor= MainInteractor(RepositoryImplementation(DataSourceRemote()), RepositoryImplementation(
-            DataSourceLocal()
-        ))
-        return MainPresenterImpl(interactor)
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
+       AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         search_fab.setOnClickListener {
             val searchDialogFragment = SearchDialogFragment.newInstance()
             searchDialogFragment.setOnSearchClickListener(object : SearchDialogFragment.OnSearchClickListener {
                 override fun onClick(searchWord: String) {
-                    presenter.getData(searchWord, true, Schedulers.io(), AndroidSchedulers.mainThread())
+                    viewModel.getData(searchWord, true, Schedulers.io(), AndroidSchedulers.mainThread())
                 }
             })
             searchDialogFragment.show(supportFragmentManager, BOTTOM_SHEET_FRAGMENT_DIALOG_TAG)
         }
+
+      viewModel = viewModelFactory.create(MainViewModel::class.java)
+      viewModel.subscribe().observe(this@MainActivity, Observer<DataModel> { renderData(it) })
     }
 
     override fun renderData(dataModel: DataModel) {
@@ -84,7 +89,6 @@ class MainActivity : BaseActivity<DataModel>() {
         showViewError()
         error_textview.text = error ?: getString(R.string.undefined_error)
         reload_button.setOnClickListener {
-            presenter.getData("hi", true, Schedulers.io(), AndroidSchedulers.mainThread())
         }
     }
 
