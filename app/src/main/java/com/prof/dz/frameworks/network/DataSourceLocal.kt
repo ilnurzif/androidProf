@@ -7,6 +7,6 @@ import io.reactivex.Observable
 
 class DataSourceLocal(private val remoteProvider: RoomDataBaseImplementation = RoomDataBaseImplementation()) :
     IDataSource<List<SearchResult>> {
+    override suspend fun getData(word: String): List<SearchResult> = remoteProvider.getData(word)
 
-    override fun getData(word: String): Observable<List<SearchResult>> = remoteProvider.getData(word)
 }

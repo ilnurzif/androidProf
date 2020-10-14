@@ -2,40 +2,24 @@ package com.prof.dz.interface_adapters.presenters
 
 import com.prof.dz.entities.DataModel
 import com.prof.dz.use_case.interactors.MainInteractor
-import io.reactivex.Scheduler
-import io.reactivex.disposables.Disposable
-import io.reactivex.observers.DisposableObserver
-import javax.inject.Inject
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-class MainViewModel @Inject constructor(private val interactor: MainInteractor): BaseViewModel<DataModel>() {
+class MainViewModel(private val interactor: MainInteractor) : BaseViewModel<DataModel>() {
 
-    override fun getData(word: String, isOnline: Boolean, ioSheduler: Scheduler, uiSheduler: Scheduler) {
-        compositeDisposable.add(
-            interactor.getData(word, isOnline)
-                .subscribeOn(ioSheduler)
-                .observeOn(uiSheduler)
-                .doOnSubscribe(doOnSubscribe())
-                .subscribeWith(getObserver())
-        )
+    override fun getData(word: String, isOnline: Boolean) {
+        msgLiveData.value = DataModel.Loading(null)
+        cancelJob()
+        viewModelCoroutineScope.launch { startInteractor(word, isOnline) }
     }
 
-    private fun doOnSubscribe(): (Disposable) -> Unit =
-        { msgLiveData.value = DataModel.Loading(null) }
-
-    private fun getObserver(): DisposableObserver<DataModel> {
-        return object : DisposableObserver<DataModel>() {
-
-            override fun onNext(data: DataModel) {
-                msgLiveData.value=data
-            }
-
-            override fun onError(e: Throwable) {
-                msgLiveData.value = DataModel.Error(e)
-            }
-
-            override fun onComplete() {
-            }
+    private suspend fun startInteractor(word: String, isOnline: Boolean) =
+        withContext(Dispatchers.IO) {
+            msgLiveData.postValue(interactor.getData(word, isOnline))
         }
-    }
 
+    override fun handleError(throwable: Throwable) {
+        msgLiveData.postValue(DataModel.Error(throwable))
+    }
 }

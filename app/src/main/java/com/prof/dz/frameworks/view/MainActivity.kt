@@ -3,31 +3,21 @@ package com.prof.dz.frameworks.view
 import android.os.Bundle
 import android.widget.Toast
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.prof.dz.R
 import com.prof.dz.entities.DataModel
 import com.prof.dz.frameworks.network.model.SearchResult
-import com.prof.dz.interface_adapters.presenters.BaseViewModel
 import com.prof.dz.interface_adapters.presenters.MainViewModel
 import com.prof.dz.use_case.interactors.MainInteractor
-import com.prof.dz.use_case.repositories.RepositoryImplementation
-import dagger.android.AndroidInjection
-import geekbrains.ru.translator.model.datasource.DataSourceLocal
-import geekbrains.ru.translator.model.datasource.DataSourceRemote
 import geekbrains.ru.translator.view.main.adapter.MainAdapter
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
-import javax.inject.Inject
+import org.koin.android.viewmodel.ext.android.viewModel
 
-class MainActivity() : BaseActivity<DataModel,MainInteractor>() {
+class MainActivity() : BaseActivity<DataModel, MainInteractor>() {
     private var adapter: MainAdapter? = null
-    @Inject
-   internal lateinit var viewModelFactory: ViewModelProvider.Factory
-   override lateinit var viewModel: MainViewModel
+    override lateinit var mainViewModel: MainViewModel
 
-        private val onListItemClickListener: MainAdapter.OnListItemClickListener =
+    private val onListItemClickListener: MainAdapter.OnListItemClickListener =
         object : MainAdapter.OnListItemClickListener {
             override fun onItemClick(data: SearchResult) {
                 Toast.makeText(this@MainActivity, data.text, Toast.LENGTH_SHORT).show()
@@ -35,21 +25,22 @@ class MainActivity() : BaseActivity<DataModel,MainInteractor>() {
         }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-       AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         search_fab.setOnClickListener {
             val searchDialogFragment = SearchDialogFragment.newInstance()
-            searchDialogFragment.setOnSearchClickListener(object : SearchDialogFragment.OnSearchClickListener {
+            searchDialogFragment.setOnSearchClickListener(object :
+                SearchDialogFragment.OnSearchClickListener {
                 override fun onClick(searchWord: String) {
-                    viewModel.getData(searchWord, true, Schedulers.io(), AndroidSchedulers.mainThread())
+                    mainViewModel.getData(searchWord, true)
                 }
             })
             searchDialogFragment.show(supportFragmentManager, BOTTOM_SHEET_FRAGMENT_DIALOG_TAG)
         }
 
-      viewModel = viewModelFactory.create(MainViewModel::class.java)
-      viewModel.subscribe().observe(this@MainActivity, Observer<DataModel> { renderData(it) })
+        val tempViewModel: MainViewModel by viewModel()
+        mainViewModel = tempViewModel
+        mainViewModel.subscribe().observe(this@MainActivity, Observer<DataModel> { renderData(it) })
     }
 
     override fun renderData(dataModel: DataModel) {
@@ -61,8 +52,10 @@ class MainActivity() : BaseActivity<DataModel,MainInteractor>() {
                 } else {
                     showViewSuccess()
                     if (adapter == null) {
-                        main_activity_recyclerview.layoutManager = LinearLayoutManager(applicationContext)
-                        main_activity_recyclerview.adapter = MainAdapter(onListItemClickListener, searchResult)
+                        main_activity_recyclerview.layoutManager =
+                            LinearLayoutManager(applicationContext)
+                        main_activity_recyclerview.adapter =
+                            MainAdapter(onListItemClickListener, searchResult)
                     } else {
                         adapter!!.setData(searchResult)
                     }
@@ -111,6 +104,7 @@ class MainActivity() : BaseActivity<DataModel,MainInteractor>() {
     }
 
     companion object {
-        private const val BOTTOM_SHEET_FRAGMENT_DIALOG_TAG = "74a54328-5d62-46bf-ab6b-cbf5fgt0-092395"
+        private const val BOTTOM_SHEET_FRAGMENT_DIALOG_TAG =
+            "74a54328-5d62-46bf-ab6b-cbf5fgt0-092395"
     }
 }

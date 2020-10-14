@@ -1,11 +1,10 @@
 package com.prof.dz.frameworks.network
 
-import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
+import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.prof.dz.frameworks.network.model.ApiService
 import com.prof.dz.frameworks.network.model.BaseInterceptor
 import com.prof.dz.frameworks.network.model.SearchResult
 import com.prof.dz.interface_adapters.data.IDataSource
-import io.reactivex.Observable
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -15,10 +14,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class RetrofitImplementation : IDataSource<List<SearchResult>> {
 
-    override fun getData(word: String): Observable<List<SearchResult>> {
-        return getService(BaseInterceptor.interceptor).search(word)
-    }
-
     private fun getService(interceptor: Interceptor): ApiService {
         return createRetrofit(interceptor).create(ApiService::class.java)
     }
@@ -27,7 +22,7 @@ class RetrofitImplementation : IDataSource<List<SearchResult>> {
         return Retrofit.Builder()
             .baseUrl(BASE_URL_LOCATIONS)
             .addConverterFactory(GsonConverterFactory.create())
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .addCallAdapterFactory(CoroutineCallAdapterFactory())
             .client(createOkHttpClient(interceptor))
             .build()
     }
@@ -41,5 +36,9 @@ class RetrofitImplementation : IDataSource<List<SearchResult>> {
 
     companion object {
         private const val BASE_URL_LOCATIONS = "https://dictionary.skyeng.ru/api/public/v1/"
+    }
+
+    override suspend fun getData(word: String): List<SearchResult> {
+        return getService(BaseInterceptor.interceptor).search(word).await()
     }
 }

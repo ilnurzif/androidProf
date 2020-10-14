@@ -8,7 +8,10 @@ import com.prof.dz.R
 import com.prof.dz.frameworks.network.model.SearchResult
 import kotlinx.android.synthetic.main.activity_main_recyclerview_item.view.*
 
-class MainAdapter(private var onListItemClickListener: OnListItemClickListener, private var data: List<SearchResult>) :
+class MainAdapter(
+    private var onListItemClickListener: OnListItemClickListener,
+    private var data: List<SearchResult>
+) :
     RecyclerView.Adapter<MainAdapter.RecyclerItemViewHolder>() {
 
     fun setData(data: List<SearchResult>) {
@@ -36,7 +39,8 @@ class MainAdapter(private var onListItemClickListener: OnListItemClickListener, 
         fun bind(data: SearchResult) {
             if (layoutPosition != RecyclerView.NO_POSITION) {
                 itemView.header_textview_recycler_item.text = data.text
-                itemView.description_textview_recycler_item.text = data.meanings?.get(0)?.translation?.translation
+                itemView.description_textview_recycler_item.text =
+                    data.meanings?.get(0)?.translation?.translation
 
                 itemView.setOnClickListener { openInNewWindow(data) }
             }

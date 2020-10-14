@@ -5,8 +5,7 @@ import com.prof.dz.interface_adapters.data.IDataSource
 import io.reactivex.Observable
 
 class RoomDataBaseImplementation : IDataSource<List<SearchResult>> {
-
-    override fun getData(word: String): Observable<List<SearchResult>> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override suspend fun getData(word: String): List<SearchResult> {
+        TODO("Not yet implemented")
     }
 }
