@@ -1,22 +1,21 @@
-package com.prof.dz.interface_adapters.presenters
+package com.prof.dz.interface_adapters.viewmodels
 
 import com.prof.dz.entities.DataModel
-import com.prof.dz.use_case.interactors.MainInteractor
+import com.prof.dz.use_case.interactors.HistoryInteractor
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class MainViewModel(private val interactor: MainInteractor) : BaseViewModel<DataModel>() {
-
+class HistoryViewModel(private val historyInteractor: HistoryInteractor) : BaseViewModel<DataModel>() {
     override fun getData(word: String, isOnline: Boolean) {
-        msgLiveData.value = DataModel.Loading(null)
         cancelJob()
         viewModelCoroutineScope.launch { startInteractor(word, isOnline) }
     }
 
     private suspend fun startInteractor(word: String, isOnline: Boolean) =
         withContext(Dispatchers.IO) {
-            msgLiveData.postValue(interactor.getData(word, isOnline))
+            val v = historyInteractor.getData(word, isOnline)
+            msgLiveData.postValue(v)
         }
 
     override fun handleError(throwable: Throwable) {

@@ -1,4 +1,4 @@
-package com.prof.dz.frameworks.view
+package com.prof.dz.frameworks.view.main
 
 import android.os.Bundle
 import android.text.Editable

@@ -7,4 +7,8 @@
     <string name="button_search">Search</string>
     <string name="search_hint">New word</string>
     <string name="delete_description">X</string>
+    <string name="history_title">История</string>
+    <string name="history_activity_title">История поиска</string>
+    <string name="warning">внимание</string>
+    <string name="description">Подробнее</string>
 </resources>

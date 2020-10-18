@@ -1,4 +1,4 @@
-package com.prof.dz.interface_adapters.presenters
+package com.prof.dz.interface_adapters.viewmodels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -8,7 +8,7 @@ import kotlinx.coroutines.*
 
 abstract class BaseViewModel<T : DataModel> (): ViewModel()
 {
-    val msgLiveData: MutableLiveData<T> = MutableLiveData()
+    var msgLiveData: MutableLiveData<T> = MutableLiveData()
 
     fun subscribe(): LiveData<T> {
         return msgLiveData
