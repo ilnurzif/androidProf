@@ -5,7 +5,6 @@ import android.view.MenuItem
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.prof.dz.R
-import com.prof.dz.application.MyApp
 import com.prof.dz.entities.DataModel
 import com.prof.dz.frameworks.network.model.SearchResult
 import com.prof.dz.frameworks.view.BaseActivity
@@ -15,6 +14,8 @@ import com.prof.dz.interface_adapters.viewmodels.MainViewModel
 import com.prof.dz.use_case.interactors.HistoryInteractor
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.history_activity.*
+import org.koin.android.viewmodel.ext.android.viewModel
+
 
 class HistoryActivity() : BaseActivity<DataModel, HistoryInteractor>() {
     override lateinit var viewModel: MainViewModel
@@ -66,10 +67,8 @@ class HistoryActivity() : BaseActivity<DataModel, HistoryInteractor>() {
         if (history_activity_RW.adapter != null) {
             throw IllegalStateException("The ViewModel should be initialised first")
         }
-    //    val viewModel: HistoryViewModel by viewModel()
-     //   model = viewModel
-        val interactor= HistoryInteractor(MyApp.companion.myApp.roomRepo)
-        model =HistoryViewModel(interactor)
+        val viewModel: HistoryViewModel by viewModel()
+        model = viewModel
         model.subscribe().observe(this@HistoryActivity, Observer<DataModel> { renderData(it) })
     }
 

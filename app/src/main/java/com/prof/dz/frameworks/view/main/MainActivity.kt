@@ -7,7 +7,6 @@ import android.view.MenuItem
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.prof.dz.R
-import com.prof.dz.application.MyApp
 import com.prof.dz.entities.DataModel
 import com.prof.dz.frameworks.network.model.SearchResult
 import com.prof.dz.frameworks.view.BaseActivity
@@ -15,10 +14,9 @@ import com.prof.dz.frameworks.view.WordDescrActivity
 import com.prof.dz.frameworks.view.history.HistoryActivity
 import com.prof.dz.interface_adapters.viewmodels.MainViewModel
 import com.prof.dz.use_case.interactors.MainInteractor
-import com.prof.dz.use_case.repositories.RepositoryImplementation
-import geekbrains.ru.translator.model.datasource.DataSourceRemote
 import geekbrains.ru.translator.view.main.adapter.MainAdapter
 import kotlinx.android.synthetic.main.activity_main.*
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class MainActivity() : BaseActivity<DataModel, MainInteractor>() {
     private var adapter: MainAdapter? = null
@@ -77,18 +75,11 @@ class MainActivity() : BaseActivity<DataModel, MainInteractor>() {
             search(false)
         }
 
-        val interactor=
-            MainInteractor(
-                RepositoryImplementation(DataSourceRemote()),
-                MyApp.companion.myApp.roomRepo
-            )
 
-     //   val tempViewModel: MainViewModel by viewModel()
-    //    mainViewModel = tempViewModel
-        viewModel= MainViewModel(interactor)
+        val tempViewModel: MainViewModel by viewModel()
+        viewModel = tempViewModel
         viewModel.subscribe().observe(this@MainActivity, Observer<DataModel> { renderData(it) })
     }
-
 
 
     override fun showErrorScreen(error: String?) {

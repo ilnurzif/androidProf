@@ -2,13 +2,16 @@ package com.prof.dz.frameworks.db.room
 
 import com.prof.dz.frameworks.network.model.Meanings
 import com.prof.dz.frameworks.network.model.SearchResult
+import com.prof.dz.frameworks.network.model.Translation
 
 fun mapHistoryEntityToSearchResult(list: List<HistoryEntity>): List<SearchResult> {
     val searchList = ArrayList<SearchResult>()
     if (!list.isNullOrEmpty()) {
         for (entity in list) {
-            val meanings = listOf()  List<Meanings>
-            searchList.add(SearchResult(entity.word, null))
+            entity.description
+            val mearning = Meanings(Translation(entity.description), entity.imageurl)
+            val meanings = listOf(mearning)
+            searchList.add(SearchResult(entity.word, meanings))
         }
     }
     return searchList
