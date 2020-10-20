@@ -5,16 +5,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.prof.dz.R
-import com.prof.dz.frameworks.network.model.SearchResult
+import com.less.model.SearchResult
 import kotlinx.android.synthetic.main.activity_main_recyclerview_item.view.*
 
 class MainAdapter(
     private var onListItemClickListener: OnListItemClickListener,
-    private var data: List<SearchResult>
+    private var data: List<com.less.model.SearchResult>
 ) :
     RecyclerView.Adapter<MainAdapter.RecyclerItemViewHolder>() {
 
-    fun setData(data: List<SearchResult>) {
+    fun setData(data: List<com.less.model.SearchResult>) {
         this.data = data
         notifyDataSetChanged()
     }
@@ -36,7 +36,7 @@ class MainAdapter(
 
     inner class RecyclerItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-        fun bind(data: SearchResult) {
+        fun bind(data: com.less.model.SearchResult) {
             if (layoutPosition != RecyclerView.NO_POSITION) {
                 itemView.header_textview_recycler_item.text = data.text
                 itemView.description_textview_recycler_item.text =
@@ -47,11 +47,11 @@ class MainAdapter(
         }
     }
 
-    private fun openInNewWindow(listItemData: SearchResult) {
+    private fun openInNewWindow(listItemData: com.less.model.SearchResult) {
         onListItemClickListener.onItemClick(listItemData)
     }
 
     interface OnListItemClickListener {
-        fun onItemClick(data: SearchResult)
+        fun onItemClick(data: com.less.model.SearchResult)
     }
 }

@@ -6,17 +6,16 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.less.core.BaseActivity
+import com.less.historyscreen.frameworks.view.HistoryActivity
+import com.less.model.DataModel
+import com.less.model.SearchResult
 import com.prof.dz.R
-import com.prof.dz.entities.DataModel
-import com.prof.dz.frameworks.network.model.SearchResult
-import com.prof.dz.frameworks.view.BaseActivity
 import com.prof.dz.frameworks.view.WordDescrActivity
-import com.prof.dz.frameworks.view.history.HistoryActivity
 import com.prof.dz.interface_adapters.viewmodels.MainViewModel
 import com.prof.dz.use_case.interactors.MainInteractor
 import geekbrains.ru.translator.view.main.adapter.MainAdapter
 import kotlinx.android.synthetic.main.activity_main.*
-import org.koin.android.viewmodel.ext.android.viewModel
 
 class MainActivity() : BaseActivity<DataModel, MainInteractor>() {
     private var adapter: MainAdapter? = null
@@ -24,7 +23,7 @@ class MainActivity() : BaseActivity<DataModel, MainInteractor>() {
 
     private val onListItemClickListener: MainAdapter.OnListItemClickListener =
         object : MainAdapter.OnListItemClickListener {
-            override fun onItemClick(data: SearchResult) {
+            override fun onItemClick(data: com.less.model.SearchResult) {
                 startActivity(
                     WordDescrActivity.getIntent(
                         this@MainActivity,
@@ -78,7 +77,7 @@ class MainActivity() : BaseActivity<DataModel, MainInteractor>() {
 
         val tempViewModel: MainViewModel by viewModel()
         viewModel = tempViewModel
-        viewModel.subscribe().observe(this@MainActivity, Observer<DataModel> { renderData(it) })
+        viewModel.subscribe().observe(this@MainActivity, Observer<com.less.model.DataModel> { renderData(it) })
     }
 
 
@@ -123,4 +122,16 @@ class MainActivity() : BaseActivity<DataModel, MainInteractor>() {
             adapter!!.setData(searchResult)
         }
     }
+
+    override fun progeressVisualization(dataModel: DataModel.Loading) {
+        if (dataModel.progress != null) {
+            progress_bar_horizontal.visibility = android.view.View.VISIBLE
+            progress_bar_round.visibility = android.view.View.GONE
+            progress_bar_horizontal.progress = dataModel.progress!!
+        } else {
+            progress_bar_horizontal.visibility = android.view.View.GONE
+            progress_bar_round.visibility = android.view.View.VISIBLE
+        }
+    }
+
 }

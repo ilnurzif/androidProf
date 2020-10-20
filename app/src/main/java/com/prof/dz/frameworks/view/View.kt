@@ -1,7 +1,7 @@
 package com.prof.dz.frameworks.view
 
-import com.prof.dz.entities.DataModel
+import com.less.model.DataModel
 
 interface View {
-    fun renderData(dataModel: DataModel)
+    fun renderData(dataModel: com.less.model.DataModel)
 }

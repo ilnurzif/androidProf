@@ -1,13 +1,13 @@
 package com.prof.dz.frameworks.koin
 
 import androidx.room.Room
-import com.prof.dz.frameworks.db.RoomDataBaseImplementation
-import com.prof.dz.frameworks.db.room.HistoryDataBase
+import com.less.repository.db.RoomDataBaseImplementation
+import com.less.repository.db.room.HistoryDataBase
 import com.prof.dz.interface_adapters.viewmodels.HistoryViewModel
 import com.prof.dz.interface_adapters.viewmodels.MainViewModel
-import com.prof.dz.use_case.interactors.HistoryInteractor
+import com.less.historyscreen.use_case.HistoryInteractor
 import com.prof.dz.use_case.interactors.MainInteractor
-import com.prof.dz.use_case.repositories.RepositoryImplementation
+import com.less.repository.repositories.RepositoryImplementation
 import geekbrains.ru.translator.model.datasource.DataSourceRemote
 import org.koin.dsl.module.module
 
@@ -24,6 +24,10 @@ val mainViewModel_ = module {
 }
 
 val historyViewModel_ = module {
-    factory<HistoryInteractor> { HistoryInteractor(get<RoomDataBaseImplementation>()) }
+    factory<com.less.historyscreen.use_case.HistoryInteractor> {
+        com.less.historyscreen.use_case.HistoryInteractor(
+            get<RoomDataBaseImplementation>()
+        )
+    }
     factory { HistoryViewModel(get()) }
 }

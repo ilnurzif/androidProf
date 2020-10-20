@@ -1,2 +1,7 @@
+include ':utills'
+include ':repository'
+include ':model'
+include ':core'
+include ':historyScreen'
 include ':app'
 rootProject.name = "dz"
