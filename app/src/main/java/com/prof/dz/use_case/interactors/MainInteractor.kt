@@ -1,8 +1,6 @@
 package com.prof.dz.use_case.interactors
 
-import com.less.model.DataModel
 import com.less.repository.db.RoomDataBaseImplementation
-import com.less.model.SearchResult
 import com.less.repository.repositories.IRepository
 
 class MainInteractor (

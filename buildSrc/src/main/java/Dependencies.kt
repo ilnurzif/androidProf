@@ -1,7 +1,7 @@
 import org.gradle.api.JavaVersion
 
 object Config {
-    const val application_id = "dz.ru.translator"
+    const val application_id = "com.prof.dz"
     const val compile_sdk = 29
     const val min_sdk = 21
     const val target_sdk = 29
@@ -44,8 +44,10 @@ object Versions {
     const val adapterCoroutines = "0.9.2"
 
     // Koin
-    const val koinAndroid = "1.0.2"
-    const val koinViewModel = "1.0.2"
+     const val koinAndroid = "1.0.2"
+     const val koinViewModel = "1.0.2"
+//    const val koinAndroid = "2.0.1"
+//    const val koinViewModel = "2.0.1"
 
     // Glide
     const val glide = "4.9.0"

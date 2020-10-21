@@ -63,9 +63,7 @@ dependencies {
     implementation Koin.koin_android
     implementation Koin.koin_view_model
 
-
     // Picasso
-    //  implementation 'com.squareup.picasso:picasso:2.5.2'
     implementation Picasso.picasso
 
     // Test

@@ -56,16 +56,15 @@ dependencies {
     implementation Kotlin.coroutines_android
 
     // Koin
-    implementation Koin.koin_android
-    implementation Koin.koin_view_model
+     implementation Koin.koin_android
+     implementation Koin.koin_view_model
 
     // Room
     implementation Room.runtime
     kapt Room.compiler
     implementation Room.room_ktx
 
-    // Picasso
-  //  implementation 'com.squareup.picasso:picasso:2.5.2'
+     // Picasso
     implementation Picasso.picasso
 
     // Test

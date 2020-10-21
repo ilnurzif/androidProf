@@ -1,12 +1,13 @@
 package com.prof.dz.interface_adapters.viewmodels
 
+import com.less.core.BaseViewModel
 import com.less.model.DataModel
 import com.prof.dz.use_case.interactors.MainInteractor
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class MainViewModel(private val mainInteractor: MainInteractor) : com.less.core.BaseViewModel<DataModel>() {
+class MainViewModel(private val mainInteractor: MainInteractor) : BaseViewModel<DataModel>() {
 
     override fun getData(word: String, isOnline: Boolean) {
         msgLiveData.value =  DataModel.Loading(null)
