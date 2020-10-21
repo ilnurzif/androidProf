@@ -27,6 +27,7 @@ android {
 }
 
 dependencies {
+
     implementation project(Modules.repository)
     implementation project(Modules.utils)
     implementation project(Modules.model)
@@ -35,6 +36,7 @@ dependencies {
     // AndroidX
     implementation Tools.multidex
     implementation Design.appcompat
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
@@ -48,7 +50,7 @@ dependencies {
     implementation Retrofit.adapter_coroutines
 
     // Coroutines
-     implementation Kotlin.core
+    implementation Kotlin.core
     implementation Kotlin.stdlib
     implementation Kotlin.coroutines_core
     implementation Kotlin.coroutines_android

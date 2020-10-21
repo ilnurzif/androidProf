@@ -5,8 +5,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import com.prof.dz.R
+import com.less.historyscreen.R
+import com.less.model.SearchResult
+
+/*import com.prof.dz.R
 import com.prof.dz.frameworks.network.model.SearchResult
+import kotlinx.android.synthetic.main.history_item.view.*  */
 import kotlinx.android.synthetic.main.history_item.view.*
 
 class HistoryAdapter : RecyclerView.Adapter<HistoryAdapter.RecyclerItemViewHolder>() {

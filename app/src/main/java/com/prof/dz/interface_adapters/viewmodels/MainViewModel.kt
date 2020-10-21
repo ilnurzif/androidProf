@@ -3,12 +3,13 @@ package com.prof.dz.interface_adapters.viewmodels
 import com.less.model.DataModel
 import com.prof.dz.use_case.interactors.MainInteractor
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class MainViewModel(private val mainInteractor: MainInteractor) : com.less.core.BaseViewModel<com.less.model.DataModel>() {
+class MainViewModel(private val mainInteractor: MainInteractor) : com.less.core.BaseViewModel<DataModel>() {
 
     override fun getData(word: String, isOnline: Boolean) {
-        msgLiveData.value = com.less.model.DataModel.Loading(null)
+        msgLiveData.value =  DataModel.Loading(null)
         cancelJob()
         viewModelCoroutineScope.launch { startInteractor(word, isOnline) }
     }
@@ -20,6 +21,6 @@ class MainViewModel(private val mainInteractor: MainInteractor) : com.less.core.
         }
 
     override fun handleError(throwable: Throwable) {
-        msgLiveData.postValue(com.less.model.DataModel.Error(throwable))
+        msgLiveData.postValue(DataModel.Error(throwable))
     }
 }

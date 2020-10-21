@@ -16,6 +16,7 @@ import com.prof.dz.interface_adapters.viewmodels.MainViewModel
 import com.prof.dz.use_case.interactors.MainInteractor
 import geekbrains.ru.translator.view.main.adapter.MainAdapter
 import kotlinx.android.synthetic.main.activity_main.*
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class MainActivity() : BaseActivity<DataModel, MainInteractor>() {
     private var adapter: MainAdapter? = null

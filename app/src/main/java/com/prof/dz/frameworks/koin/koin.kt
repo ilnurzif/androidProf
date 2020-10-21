@@ -3,9 +3,8 @@ package com.prof.dz.frameworks.koin
 import androidx.room.Room
 import com.less.repository.db.RoomDataBaseImplementation
 import com.less.repository.db.room.HistoryDataBase
-import com.prof.dz.interface_adapters.viewmodels.HistoryViewModel
+import com.less.historyscreen.viwmodels.HistoryViewModel
 import com.prof.dz.interface_adapters.viewmodels.MainViewModel
-import com.less.historyscreen.use_case.HistoryInteractor
 import com.prof.dz.use_case.interactors.MainInteractor
 import com.less.repository.repositories.RepositoryImplementation
 import geekbrains.ru.translator.model.datasource.DataSourceRemote
@@ -20,7 +19,7 @@ val application = module {
 
 val mainViewModel_ = module {
    factory<MainInteractor> { MainInteractor(get<RepositoryImplementation>(), get<RoomDataBaseImplementation>()) }
-    factory { MainViewModel(get())}
+   factory { MainViewModel(get())}
 }
 
 val historyViewModel_ = module {

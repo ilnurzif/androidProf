@@ -1,9 +1,9 @@
-package com.prof.dz.interface_adapters.viewmodels
+package com.less.historyscreen.viwmodels
 
-import com.less.model.DataModel
-import com.less.historyscreen.use_case.HistoryInteractor
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+
 
 class HistoryViewModel(private val historyInteractor: com.less.historyscreen.use_case.HistoryInteractor) : com.less.core.BaseViewModel<com.less.model.DataModel>() {
     override fun getData(word: String, isOnline: Boolean) {
