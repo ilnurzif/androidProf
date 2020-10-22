@@ -9,7 +9,7 @@ import com.prof.dz.interface_adapters.viewmodels.MainViewModel
 import com.prof.dz.use_case.interactors.MainInteractor
 import com.less.repository.repositories.RepositoryImplementation
 import geekbrains.ru.translator.model.datasource.DataSourceRemote
-import org.koin.dsl.module.module
+import org.koin.dsl.module
 
 
 val application = module {

@@ -4,24 +4,21 @@ import android.app.Application
 import com.prof.dz.frameworks.koin.application
 import com.prof.dz.frameworks.koin.historyViewModel_
 import com.prof.dz.frameworks.koin.mainViewModel_
-import org.koin.android.ext.android.startKoin
+import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
+import org.koin.core.context.startKoin
+
 
 class MyApp : Application()  {
 
     override fun onCreate() {
         super.onCreate()
 
-
-      val moduleList = listOf (application, mainViewModel_,historyViewModel_)
-        startKoin (this, moduleList)
-
-//       startKoin {moduleList}
-
- /*       startKoin {
+  startKoin {
             androidLogger()
-            androidContext(this@MyApp)
-            modules(moduleList)
+            androidContext(applicationContext)
+            modules(listOf (application, mainViewModel_,historyViewModel_))
         }
-*/
+
     }
 }

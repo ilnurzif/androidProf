@@ -79,8 +79,6 @@ class MainActivity() : BaseActivity<DataModel, MainInteractor>() {
        val tempViewModel: MainViewModel by viewModel()
         viewModel = tempViewModel
 
-//        val mainInteractor = MainInteractor(RepositoryImplementation(DataSourceRemote()), RoomDataBaseImplementation(dao))
-//        viewModel = MainViewModel(mainInteractor)
        viewModel.subscribe().observe(this@MainActivity, Observer<DataModel> { renderData(it) })
     }
 

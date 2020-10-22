@@ -44,10 +44,10 @@ object Versions {
     const val adapterCoroutines = "0.9.2"
 
     // Koin
-     const val koinAndroid = "1.0.2"
-     const val koinViewModel = "1.0.2"
-//    const val koinAndroid = "2.0.1"
-//    const val koinViewModel = "2.0.1"
+//     const val koinAndroid = "1.0.2"
+//     const val koinViewModel = "1.0.2"
+    const val koinAndroid = "2.0.1"
+    const val koinViewModel = "2.0.1"
 
     // Glide
     const val glide = "4.9.0"
