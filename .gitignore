@@ -12,3 +12,7 @@
 /captures
 .externalNativeBuild
 .cxx
+/buildSrc/build/reports
+/buildSrc/build/tmp
+/buildSrc/build/pluginDescriptors
+build
