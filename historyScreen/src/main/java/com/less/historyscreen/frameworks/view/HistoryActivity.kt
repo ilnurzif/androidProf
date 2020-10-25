@@ -6,6 +6,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.less.core.BaseActivity
 import com.less.historyscreen.R
+import com.less.historyscreen.frameworks.koin.injectDependencies
 import com.less.historyscreen.frameworks.view.adapter.HistoryAdapter
 import com.less.historyscreen.use_case.HistoryInteractor
 import com.less.historyscreen.viwmodels.HistoryViewModel
@@ -65,6 +66,7 @@ class HistoryActivity() : BaseActivity<DataModel, HistoryInteractor>() {
      if (history_activity_RW.adapter != null) {
            throw IllegalStateException("The ViewModel should be initialised first")
         }
+        injectDependencies()
         val viewModel: HistoryViewModel by viewModel()
         model = viewModel
         model.subscribe().observe(this@HistoryActivity, Observer<DataModel> { renderData(it) })

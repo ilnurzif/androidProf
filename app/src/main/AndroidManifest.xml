@@ -14,9 +14,6 @@
         android:supportsRtl="true"
         android:name="com.prof.dz.application.MyApp"
         android:theme="@style/AppTheme">
-        <activity android:name="com.less.historyscreen.frameworks.view.HistoryActivity"
-            android:label="@string/history_activity_title">
-        </activity>
         <activity android:name=".frameworks.view.WordDescrActivity"
             android:label="@string/description">
         </activity>

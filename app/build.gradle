@@ -7,6 +7,8 @@ android {
     compileSdkVersion 30
     buildToolsVersion "30.0.2"
 
+    dynamicFeatures = [Modules.historyScreen]
+
     defaultConfig {
         applicationId "com.prof.dz"
         minSdkVersion 21
@@ -30,7 +32,7 @@ dependencies {
     implementation project(Modules.repository)
     implementation project(Modules.utils)
     implementation project(Modules.model)
-    implementation project(Modules.historyScreen)
+ //   implementation project(Modules.historyScreen)
     implementation project(Modules.core)
     // AndroidX
     implementation Tools.multidex
@@ -65,6 +67,8 @@ dependencies {
 
      // Picasso
     implementation Picasso.picasso
+
+    implementation GooglePlay.googlePlayCore
 
     // Test
     testImplementation TestImpl.junit
