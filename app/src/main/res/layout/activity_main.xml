@@ -26,14 +26,6 @@
                 android:layout_marginEnd="@dimen/margin_medium"
                 android:layout_height="wrap_content"/>
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/search_history_fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_marginEnd="@dimen/margin_medium"
-            android:layout_marginBottom="90dp"
-            android:src="@drawable/find_db" />
     </FrameLayout>
 
     <FrameLayout

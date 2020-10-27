@@ -4,9 +4,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.play.core.appupdate.AppUpdateManager
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
@@ -21,6 +23,7 @@ import com.google.android.play.core.splitinstall.SplitInstallRequest
 import com.less.core.BaseActivity
 import com.less.model.DataModel
 import com.less.model.SearchResult
+import com.less.utills.viewById
 import com.prof.dz.R
 import com.prof.dz.frameworks.koin.injectDependencies
 import com.prof.dz.frameworks.view.WordDescrActivity
@@ -28,7 +31,8 @@ import com.prof.dz.interface_adapters.viewmodels.MainViewModel
 import com.prof.dz.use_case.interactors.MainInteractor
 import geekbrains.ru.translator.view.main.adapter.MainAdapter
 import kotlinx.android.synthetic.main.activity_main.*
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.android.scope.currentScope
+
 
 class MainActivity() : BaseActivity<DataModel, MainInteractor>() {
 
@@ -68,7 +72,8 @@ class MainActivity() : BaseActivity<DataModel, MainInteractor>() {
     }
 
     private var adapter: MainAdapter? = null
-    override lateinit var viewModel: MainViewModel
+   override lateinit var viewModel: MainViewModel
+  //  override val viewModel : MainViewModel by currentScope.inject()
     private lateinit var splitInstallManager: SplitInstallManager
 
     private fun checkForUpdates() {
@@ -107,7 +112,6 @@ class MainActivity() : BaseActivity<DataModel, MainInteractor>() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.menu_history -> {
-                //startActivity(Intent(this, HistoryActivity::class.java))
                 historyScreenCreate()
                 true
             }
@@ -159,26 +163,25 @@ class MainActivity() : BaseActivity<DataModel, MainInteractor>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        val search_fab by viewById<FloatingActionButton>(R.id.search_fab)
         search_fab.setOnClickListener {
             search(true)
         }
 
-        search_history_fab.setOnClickListener {
-            search(false)
-        }
-
         injectDependencies()
-       val tempViewModel: MainViewModel by viewModel()
-        viewModel = tempViewModel
-
+   //    val tempViewModel: MainViewModel by viewModel()
+     //   viewModel = tempViewModel
+       val tempViewModel : MainViewModel by currentScope.inject()
+       viewModel = tempViewModel
        viewModel.subscribe().observe(this@MainActivity, Observer<DataModel> { renderData(it) })
     }
 
 
     override fun showErrorScreen(error: String?) {
         showViewError()
+        val error_textview by viewById<TextView>(R.id.error_textview)
         error_textview.text = error ?: getString(R.string.undefined_error)
+        val reload_button by viewById<FloatingActionButton>(R.id.reload_button)
         reload_button.setOnClickListener {
         }
     }

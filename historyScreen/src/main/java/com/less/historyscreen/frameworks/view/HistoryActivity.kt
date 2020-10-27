@@ -12,7 +12,9 @@ import com.less.historyscreen.use_case.HistoryInteractor
 import com.less.historyscreen.viwmodels.HistoryViewModel
 import com.less.model.DataModel
 import com.less.model.SearchResult
+import com.prof.dz.interface_adapters.viewmodels.MainViewModel
 import kotlinx.android.synthetic.main.history_activity.*
+import org.koin.android.scope.currentScope
 import org.koin.android.viewmodel.ext.android.viewModel
 
 
@@ -67,7 +69,8 @@ class HistoryActivity() : BaseActivity<DataModel, HistoryInteractor>() {
            throw IllegalStateException("The ViewModel should be initialised first")
         }
         injectDependencies()
-        val viewModel: HistoryViewModel by viewModel()
+   //     val viewModel: HistoryViewModel by viewModel()
+        val viewModel : HistoryViewModel by currentScope.inject()
         model = viewModel
         model.subscribe().observe(this@HistoryActivity, Observer<DataModel> { renderData(it) })
     }
