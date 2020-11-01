@@ -5,7 +5,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import com.less.utills.OnlineLiveData
 import com.prof.dz.R
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
@@ -18,7 +21,8 @@ class WordDescrActivity : AppCompatActivity() {
         setContentView(R.layout.word_descr_activity)
 
         setActionbarHomeButtonAsUp()
-        setData()
+      // setData()
+         startLoadingOrShowError()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -53,6 +57,19 @@ class WordDescrActivity : AppCompatActivity() {
         if (description_screen_swipe_refresh_layout.isRefreshing) {
             description_screen_swipe_refresh_layout.isRefreshing = false
         }
+    }
+
+    private fun startLoadingOrShowError() {
+        OnlineLiveData(this).observe(
+            this@WordDescrActivity,
+            Observer<Boolean> {
+                if (it) {
+                    setData()
+                } else {
+                     Toast.makeText(this,"network offline",Toast.LENGTH_LONG).show()
+
+                }
+            })
     }
 
     private fun usePicassoToLoadPhoto(imageView: ImageView, imageLink: String) {

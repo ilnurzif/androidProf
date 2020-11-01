@@ -73,7 +73,6 @@ class MainActivity() : BaseActivity<DataModel, MainInteractor>() {
 
     private var adapter: MainAdapter? = null
    override lateinit var viewModel: MainViewModel
-  //  override val viewModel : MainViewModel by currentScope.inject()
     private lateinit var splitInstallManager: SplitInstallManager
 
     private fun checkForUpdates() {
@@ -149,6 +148,11 @@ class MainActivity() : BaseActivity<DataModel, MainInteractor>() {
 
 
     fun search(isOnline:Boolean) {
+        if (!isNetworkAvailable) {
+            Toast.makeText(this,"network offline",Toast.LENGTH_LONG).show()
+            return
+        }
+
         val searchDialogFragment = SearchDialogFragment.newInstance()
         searchDialogFragment.setOnSearchClickListener(object :
             SearchDialogFragment.OnSearchClickListener {
@@ -169,8 +173,7 @@ class MainActivity() : BaseActivity<DataModel, MainInteractor>() {
         }
 
         injectDependencies()
-   //    val tempViewModel: MainViewModel by viewModel()
-     //   viewModel = tempViewModel
+
        val tempViewModel : MainViewModel by currentScope.inject()
        viewModel = tempViewModel
        viewModel.subscribe().observe(this@MainActivity, Observer<DataModel> { renderData(it) })

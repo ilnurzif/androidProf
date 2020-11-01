@@ -7,7 +7,7 @@ import com.less.repository.data.IDataSource
 
 class DataSourceRemote(private val remoteProvider: RetrofitImplementation = RetrofitImplementation()) :
     IDataSource<List<SearchResult>> {
-    override suspend fun getData(word: String): List<com.less.model.SearchResult> {
+    override suspend fun getData(word: String): List<SearchResult> {
         return remoteProvider.getData(word)
     }
 }

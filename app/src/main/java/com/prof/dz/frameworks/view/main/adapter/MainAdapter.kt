@@ -10,11 +10,11 @@ import kotlinx.android.synthetic.main.activity_main_recyclerview_item.view.*
 
 class MainAdapter(
     private var onListItemClickListener: OnListItemClickListener,
-    private var data: List<com.less.model.SearchResult>
+    private var data: List<SearchResult>
 ) :
     RecyclerView.Adapter<MainAdapter.RecyclerItemViewHolder>() {
 
-    fun setData(data: List<com.less.model.SearchResult>) {
+    fun setData(data: List<SearchResult>) {
         this.data = data
         notifyDataSetChanged()
     }
@@ -36,7 +36,7 @@ class MainAdapter(
 
     inner class RecyclerItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-        fun bind(data: com.less.model.SearchResult) {
+        fun bind(data: SearchResult) {
             if (layoutPosition != RecyclerView.NO_POSITION) {
                 itemView.header_textview_recycler_item.text = data.text
                 itemView.description_textview_recycler_item.text =
@@ -52,6 +52,6 @@ class MainAdapter(
     }
 
     interface OnListItemClickListener {
-        fun onItemClick(data: com.less.model.SearchResult)
+        fun onItemClick(data: SearchResult)
     }
 }

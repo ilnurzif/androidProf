@@ -4,11 +4,12 @@
     <string name="reload_button">Reload</string>
     <string name="undefined_error">Undefined error</string>-->
     <string name="empty_server_response_on_success">Response from server is empty</string>
-<!--    <string name="button_search">Search</string>
-    <string name="search_hint">New word</string>
-    <string name="delete_description">X</string>
-    <string name="history_title">История</string>
-    <string name="history_activity_title">История поиска</string>
-    <string name="warning">внимание</string>
-    <string name="description">Подробнее</string>-->
+    <string name="device_is_offline">device is offline</string>
+    <!--    <string name="button_search">Search</string>
+        <string name="search_hint">New word</string>
+        <string name="delete_description">X</string>
+        <string name="history_title">История</string>
+        <string name="history_activity_title">История поиска</string>
+        <string name="warning">внимание</string>
+        <string name="description">Подробнее</string>-->
 </resources>
